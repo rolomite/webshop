@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shop extends Model
+class Product extends Model
 {
-    /** @use HasFactory<\Database\Factories\ShopFactory> */
+    /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
     protected $guarded = [];
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
 }
