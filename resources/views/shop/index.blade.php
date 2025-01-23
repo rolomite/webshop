@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-6xl mx-auto my-10 space-y-4 lg:grid grid-cols-3">
+    <div class="max-w-6xl mx-auto my-10 space-y-4 lg:grid grid-cols-4">
         @forelse ($products as $product)
             <x-product-card :product="$product">
                 <x-slot:actions>

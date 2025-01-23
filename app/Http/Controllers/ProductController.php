@@ -39,17 +39,17 @@ class ProductController extends Controller
         }
 
 
-        Product::query()->create([
+        $product = Product::query()->create([
             "project_name" => $data["project_name"],
             "preview_link" => $data["preview_link"],
             "description" => $data["description"],
             "repo_link" => $data["repo_link"],
-            "image" => $data["image"],
+            "image" => $data["image"] ?? '',
             "price" => $data["price"],
-            "published_at" => $data['published'] === "published" ? now() : null,
+            "published_at" => $data['published_at'] === "published" ? now() : null,
         ]);
 
-        return redirect()->route('products.create')->with('success', 'Product added successfully');
+        return redirect()->route('admin.products.show', $product)->with('success', 'Product added successfully');
     }
 
     /**
