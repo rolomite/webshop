@@ -21,14 +21,19 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        if ($this->method() == 'PATCH') {
+            return [
+                'published_at' => ['required', 'in:published,draft'],
+            ];
+        }
         return [
             'project_name' => ['required', 'string', 'max:255'],
             'preview_link' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'repo_link' => ['required', 'string', 'max:255'],
-            'image' => ['required', 'image'],
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'price' => ['required', 'numeric'],
-            'publish_now' => ['required', 'string'],
+            'published_at' => ['required', 'in:published,draft'],
         ];
     }
 }

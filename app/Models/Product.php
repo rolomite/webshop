@@ -14,4 +14,9 @@ class Product extends Model
     protected $casts = [
         'published_at' => 'datetime',
     ];
+
+    public function published()
+    {
+        return !is_null($this->published_at);
+    }
 }

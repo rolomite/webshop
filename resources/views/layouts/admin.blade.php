@@ -17,21 +17,21 @@
 </head>
 
 <body class="font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-200 antialiased h-full">
-<div class="min-h-full">
-    @include('layouts.admin-navigation')
+    <div class="min-h-full">
+        @include('layouts.admin-navigation')
 
-    <header class="bg-white dark:bg-neutral-800 shadow">
-        @isset($header)
-            <div {{$header->attributes->class("mx-auto max-w-7xl px-4 py-4 sm:px-4 lg:px-6")}}>
-                {{ $header }}
+        <header class="bg-white dark:bg-neutral-800 shadow">
+            @isset($header)
+                <div {{$header->attributes->class("mx-auto max-w-7xl px-4 py-4 sm:px-4 lg:px-6")}}>
+                    {{ $header }}
+                </div>
+            @endisset
+        </header>
+        <main>
+            <div class="mx-auto max-w-7xl px-1 py-6 sm:px-1 lg:px-8">
+                {{ $slot }}
             </div>
-        @endisset
-    </header>
-    <main>
-        <div class="mx-auto max-w-7xl px-1 py-6 sm:px-1 lg:px-8">
-            {{ $slot }}
-        </div>
-    </main>
-</div>
+        </main>
+    </div>
 </body>
 </html>

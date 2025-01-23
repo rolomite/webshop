@@ -46,9 +46,9 @@ class ProductController extends Controller
             "repo_link" => $data["repo_link"],
             "image" => $data["image"],
             "price" => $data["price"],
-            "published_at" => $data['publish_now'] === "publish" ? now() : null,
+            "published_at" => $data['published'] === "published" ? now() : null,
         ]);
-        
+
         return redirect()->route('products.create')->with('success', 'Product added successfully');
     }
 
@@ -57,7 +57,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('product.show', [
+            'product' => $product,
+        ]);
     }
 
     /**
@@ -71,9 +73,14 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        $data = $request->validated();
+        $data['published_at'] = $data['published_at'] === "published" ? now() : null;
+
+        $product->fill($data)->save();
+
+        return redirect()->back()->with('success', 'Product updated successfully');
     }
 
     /**
