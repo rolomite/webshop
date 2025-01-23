@@ -16,40 +16,22 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen grid grid-cols-10 bg-gray-100 dark:bg-gray-900">
-        <div class="flex dark:text-white flex-col items-center col-span-2 py-10">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+<body class="font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-200 antialiased h-full">
+<div class="min-h-full">
+    @include('layouts.admin-navigation')
 
-            <ul class="w-full space-y-3 d px-3 pt-10">
-                <li @class([ "px-5 py-3 rounded-full" , "bg-gray-700 text-white"=> request()->routeIs('admin'),
-                    "hover:bg-gray-800/80 hover:text-white" => !request()->routeIs('admin')
-                    ])> <a class="flex items-center justify-between" href="#">Users <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </a></li>
-
-                <li @class([ "px-5 py-3 rounded-full" , "bg-gray-700 text-white"=> request()->routeIs('orders'),
-                    "hover:bg-gray-800/80 hover:text-white" => !request()->routeIs('orders')
-                    ])><a class="flex items-center justify-between" href="#">Orders <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </a></li>
-                <li @class([ "px-5 py-3 rounded-full" , "bg-gray-700 text-white"=> request()->routeIs('products.index'),
-                    "hover:bg-gray-800/80 hover:text-white" => !request()->routeIs('products.index')
-                    ])><a class="flex items-center justify-between" href="{{route('products.index')}}">Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </a></li>
-            </ul>
-        </div>
-
-        <div class="w-full col-span-8 col-start-3 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+    <header class="bg-white dark:bg-neutral-800 shadow">
+        @isset($header)
+            <div {{$header->attributes->class("mx-auto max-w-7xl px-4 py-4 sm:px-4 lg:px-6")}}>
+                {{ $header }}
+            </div>
+        @endisset
+    </header>
+    <main>
+        <div class="mx-auto max-w-7xl px-1 py-6 sm:px-1 lg:px-8">
             {{ $slot }}
         </div>
-    </div>
+    </main>
+</div>
 </body>
-
 </html>

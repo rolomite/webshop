@@ -6,24 +6,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/admin', function(){
-    return view('admin.index');
-})->name('admin');
-
-
- 
-Route::resource('shop', ShopController::class);
-Route::resource('product', ProductController::class)->names('products');
+Route::get('/', [ShopController::class, 'index'])->name('store');
+Route::get('/store/{product}', [ShopController::class, 'show'])->name('store.product');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
+    Route::redirect('/', 'admin/dashboard')->name('admin');
+    Route::get('/dashboard', [ProductController::class, 'index'])->name('dashboard');
+    Route::resource('products', ProductController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

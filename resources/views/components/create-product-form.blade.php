@@ -1,4 +1,4 @@
-<form action="{{route('products.store')}}" method="POST" class="w-full" enctype="multipart/form-data">
+<form action="{{route('admin.products.store')}}" method="POST" class="w-full" enctype="multipart/form-data">
     @csrf
     <div class="w-full space-y-5">
 

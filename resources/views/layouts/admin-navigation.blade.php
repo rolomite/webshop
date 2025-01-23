@@ -1,9 +1,19 @@
 @php
     $navigations = [
         [
-            'title' => 'Store',
-            'href' => route('store'),
-            'active' => request()->routeIs('store')
+            'title' => 'Dashboard',
+            'href' => route('admin.dashboard'),
+            'active' => request()->routeIs('admin.dashboard')
+        ],
+        [
+            'title' => 'Orders',
+            'href' => '#',
+            'active' => false
+        ],
+        [
+            'title' => 'Customers',
+            'href' => '#',
+            'active' => false
         ],
     ];
 @endphp
@@ -28,11 +38,6 @@
             </div>
             <div class="hidden md:block">
                 <div class="ml-4 flex items-center md:ml-6">
-                    <button type="button" class="relative rounded-full bg-neutral-800 p-1 text-neutral-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-800">
-                        <span class="absolute -inset-1.5"></span>
-                        <span class="sr-only">View cart</span>
-                        <x-lucide-shopping-cart class="size-6"/>
-                    </button>
 
                     <!-- Profile dropdown -->
                     <div class="relative ml-3">
