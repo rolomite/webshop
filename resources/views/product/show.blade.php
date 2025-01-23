@@ -42,7 +42,7 @@
                 <div class="flex items-center justify-between w-full">
                     <span>URL</span>
                     <span>
-                        <a href="{{ $product->preview_link }}">{{ $product->preview_link }} <x-lucide-external-link class="size-3 ml-1 inline-block"/></a>
+                        <a href="{{ $product->preview_link }}" target="_blank">{{ $product->preview_link }} <x-lucide-external-link class="size-3 ml-1 inline-block"/></a>
                     </span>
                 </div>
             </li>
@@ -50,7 +50,7 @@
                 <div class="flex items-center justify-between w-full">
                     <span>Project Repo</span>
                     <span>
-                        <a href="{{ $product->repo_link }}">{{ $product->repo_link }} <x-lucide-external-link class="size-3 ml-1 inline-block"/></a>
+                        <a href="{{ $product->repo_link }}" target="_blank">{{ $product->repo_link }} <x-lucide-external-link class="size-3 ml-1 inline-block"/></a>
                     </span>
                 </div>
             </li>

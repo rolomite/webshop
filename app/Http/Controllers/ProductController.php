@@ -67,7 +67,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('product.edit', [
+            'product' => $product,
+        ]);
     }
 
     /**
@@ -77,6 +79,12 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         $data['published_at'] = $data['published_at'] === "published" ? now() : null;
+
+        if($request->hasFile('image')){
+            $data['image'] = $request->file('image')->storePublicly('images', 'public');
+        }else{
+            $data['image'] = $product->image;
+        }
 
         $product->fill($data)->save();
 

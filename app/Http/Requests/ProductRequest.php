@@ -31,7 +31,7 @@ class ProductRequest extends FormRequest
             'preview_link' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'repo_link' => ['required', 'string', 'max:255'],
-            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'price' => ['required', 'numeric'],
             'published_at' => ['required', 'in:published,draft'],
         ];
