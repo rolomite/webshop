@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ShopController::class, 'index'])->name('store');
+Route::resource('cart', CartController::class)->names('cart');
 Route::get('/store/{product}', [ShopController::class, 'show'])->name('store.product');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 
