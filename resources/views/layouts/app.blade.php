@@ -28,7 +28,7 @@
             @endisset
         </header>
         <main>
-            <div class="mx-auto max-w-7xl px-1 py-6 sm:px-1 lg:px-8">
+            <div class="mx-auto max-w-7xl px-5 py-6 sm:px-1 lg:px-8">
                 {{ $slot }}
             </div>
         </main>

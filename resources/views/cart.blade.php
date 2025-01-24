@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="w-full p-10 flex flex-col bg-white border shadow-sm rounded-md dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+    <div class="w-full p-5 flex flex-col bg-white border shadow-sm rounded-md dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
         <p class="mt-1 pb-5 border-b text-lg text-gray-500 dark:text-white">
             Cart (
             <span x-text="cart.length"></span>
@@ -23,14 +23,15 @@
                         <p>NGN <span x-text="item.price"></span></p>
                     </div>
                     <div class="flex items-center justify-between"> <button @click="removeFromCart(item.id)" class="text-teal-400 flex items-center gap-x-2 text-sm"> Remove</button>
-                        <p>QTY: <span x-text="item.quantity"></span></p>
                     </div>
                 </div>
             </template>
         </div>
-        <p class="flex items-center justify-between border-t pt-5 mb-5">
-            Total: <span x-text="totalPrice"></span>
-        </p>
-        <x-primary-button>checkout</x-primary-button>
+        <div x-show="cart.length > 0">
+            <div class="flex items-center justify-between border-t pt-5 mb-5">
+                Total: <p >NGN<span class="ml-2" x-text="totalPrice"></span></p>
+            </div>
+            <a href="#" class="w-full p-4 rounded-md bg-blue-500 inline-block text-center">checkout</a>
+        </div>
     </div>
 </x-app-layout>
