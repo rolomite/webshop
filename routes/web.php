@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ShopController::class, 'index'])->name('store');
 Route::resource('cart', CartController::class)->names('cart');
+Route::post('checkout', [CartController::class, 'checkout'])->name('checkout');
 Route::get('/store/{product}', [ShopController::class, 'show'])->name('store.product');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 

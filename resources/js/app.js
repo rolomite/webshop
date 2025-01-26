@@ -42,6 +42,10 @@ Alpine.data("cartHandler", () => ({
     removeFromCart(productId) {
         this.cart = this.cart.filter((item) => item.id !== productId); // Remove item reactively
     },
+    
+    clearCart() {
+        this.cart = [];
+    },
 }));
 
 Alpine.start();

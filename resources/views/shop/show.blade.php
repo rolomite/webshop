@@ -1,5 +1,24 @@
 <x-app-layout>
     <div class="max-w-6xl mx-auto px-5 text-sm pt-10 dark:text-white">
+        <div x-show="showAlert" id="dismiss-alert" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 bg-teal-50 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" role="alert" tabindex="-1" aria-labelledby="hs-dismiss-button-label">
+            <div class="flex">
+                <div class="shrink-0">
+                    <x-lucide-circle-check />
+                </div>
+                <div class="ms-2">
+                    <h3 id="hs-dismiss-button-label" class="text-sm font-medium">
+                        Product added successfully.
+                    </h3>
+                </div>
+                <div class="ps-3 ms-auto">
+                    <div class="-mx-1.5 -my-1.5">
+                        <button type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:bg-teal-100 dark:bg-transparent dark:text-teal-600 dark:hover:bg-teal-800/50 dark:focus:bg-teal-800/50" data-hs-remove-element="#dismiss-alert">
+                            <span class="sr-only">Dismiss</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="lg:flex justify-between max-md:space-y-5">
             <div class="w-full lg:size-[600px] max-h-max">
                 <img src="{{asset($product->image)}}" alt="site screenshot">
