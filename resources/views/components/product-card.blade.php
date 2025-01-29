@@ -10,7 +10,7 @@
 {{--            {{ $product->description }}--}}
 {{--        </p>--}}
         <div class="mt-4 flex flex-col gap-4">
-            <span class="flex-1 font-bold">NGN{{$product->price}}</span>
+            <span x-currency:NGN="{{$product->price}}" class="flex-1 font-bold"></span>
             @isset($actions)
                 {{$actions}}
             @endisset

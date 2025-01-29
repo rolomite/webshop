@@ -1,6 +1,5 @@
 <x-app-layout>
-    @if (session('success'))
-    <div id="dismiss-alert" class="mb-5 hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 bg-teal-50 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" role="alert" tabindex="-1" aria-labelledby="hs-dismiss-button-label">
+    <div x-show="alert" id="dismiss-alert" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 bg-teal-50 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" role="alert" tabindex="-1" aria-labelledby="hs-dismiss-button-label">
         <div class="flex">
             <div class="shrink-0">
                 <x-lucide-circle-check />
@@ -20,15 +19,14 @@
             </div>
         </div>
     </div>
-    @endif
     <div class="w-full p-5 flex flex-col bg-white border shadow-sm rounded-md dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
         <p class="mt-1 pb-5 border-b text-lg text-gray-500 dark:text-white">
             Cart (
-            <span x-text="cart.length"></span>
+            <span x-text="cart.count"></span>
             )
         </p>
         <div>
-            <div x-show="cart.length === 0" class="tracking-wider text-center text-sm  space-y-4 my-5 text-gray-500 dark:text-neutral-400">
+            <div x-show="cart.count === 0" class="tracking-wider text-center text-sm  space-y-4 my-5 text-gray-500 dark:text-neutral-400">
                 <p class="font-bold text-lg">Your cart is empty!</p>
                 <p> Browse our products for awesome deals!
                 </p>
@@ -42,7 +40,7 @@
                             <p x-text="item.name" class="mt-2 text-gray-500 dark:text-neutral-400">
                             </p>
                         </div>
-                        <p>NGN <span x-text="item.price"></span></p>
+                        <span x-currency:NGN="item.price"></span>
                     </div>
                     <div class="flex items-center justify-between"> <button @click="removeFromCart(item.id)" class="text-teal-400 flex items-center gap-x-2 text-sm"> Remove</button>
                     </div>
@@ -51,12 +49,9 @@
         </div>
         <div x-show="cart.length > 0">
             <div class="flex items-center justify-between border-t pt-5 mb-5">
-                Total: <p>NGN<span class="ml-2" x-text="totalPrice"></span></p>
+                Total: <p><span class="ml-2" x-currency:NGN="total"></span></p>
             </div>
-            <form action="{{route('checkout')}}" method="POST">
-                @csrf
-                <button class="w-full p-4 rounded-md bg-blue-500 inline-block text-center">checkout</button>
-            </form>
+            <button @click="checkout()" class="w-full p-4 rounded-md bg-blue-500 inline-block text-center">checkout</button>
         </div>
     </div>
 </x-app-layout>

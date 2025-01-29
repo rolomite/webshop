@@ -9,7 +9,7 @@
             </svg>
         </a>
     </x-slot:header>
-    <div class="my-10 space-y-10">
+    <div class="my-10">
         <div class="flex flex-col">
             <h4 class="dark:text-neutral-200 font-medium text-lg mb-2">My Products</h4>
             <div class="-m-1.5 overflow-x-auto">

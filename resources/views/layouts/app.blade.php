@@ -17,9 +17,7 @@
 </head>
 
 <body class="font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-200 antialiased h-full">
-    <div class="min-h-full" x-data="cartHandler()" x-init="@if (session('clear_cart'))
-        clearCart();
-    @endif">
+    <div class="min-h-full" x-data="cartHandler()">
         @include('layouts.navigation')
 
         <header class="bg-white dark:bg-neutral-800 shadow">

@@ -30,7 +30,7 @@ $navigations = [
                         <span class="absolute -inset-1.5"></span>
                         <span class="sr-only">View cart</span>
                         <x-lucide-shopping-cart class="size-6" />
-                        <span x-show="cart.length > 0" class="absolute -top-1 -right-2 text-xs font-bold text-center w-5 h-5 flex items-center justify-center text-white bg-teal-800/90 rounded-full" x-text="cart.length"></span>
+                        <span x-show="cart.count > 0" class="absolute -top-1 -right-2 text-xs font-bold text-center w-5 h-5 flex items-center justify-center text-white bg-teal-800/90 rounded-full" x-text="cart.length"></span>
                     </a>
 
 

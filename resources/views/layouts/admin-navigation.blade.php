@@ -15,6 +15,11 @@
             'href' => '#',
             'active' => false
         ],
+        [
+            'title' => 'Settings',
+            'href' => route('admin.settings.index'),
+            'active' => request()->routeIs('admin.settings.index')
+        ],
     ];
 @endphp
 <nav class="bg-neutral-800" x-data="{isOpen: false}">
