@@ -10,7 +10,7 @@
 
     <section class="flex flex-col lg:flex-row items-start gap-4">
         <div class="max-w-2xl w-full">
-            <img src="{{asset($product->image)}}" alt="{{ $product->product_name }}" class="w-full max-w-lg">
+            <img src="{{asset($product->featured_image)}}" alt="{{ $product->name }}" class="w-full max-w-lg">
             <h4 class="text-lg font-medium mt-4 mb-1 dark:text-neutral-100">Product Description</h4>
             <p class="text-sm">{{$product->description}}</p>
         </div>

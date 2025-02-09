@@ -1,19 +1,42 @@
-@props(['disabled' => false, 'label' => null, 'suffix' => null, 'prefix' => null])
+@props(['disabled' => false, 'label' => null, 'suffix' => null, 'prefix' => null, 'files' => []])
 
 @php
     $id = $attributes->get('id') ?? \Illuminate\Support\Str::uuid();
     $value = old($attributes->get('name')) ?? $attributes->get('value');
 @endphp
 
-<div x-data="{ preview: @js($value) }">
+<div x-data="{ preview: @js($value), files: @js($files), previews: [] }">
     <!-- Label -->
-    <x-input-label for="{{ $id }}">
-        <span class="block">{{ $label }}</span>
+    <div>
         <!-- Image Preview -->
-        <template x-if="preview">
-            <img :src="preview" alt="Image Preview" class="block w-32 h-32 mb-2 object-cover rounded-lg" />
-        </template>
-    </x-input-label>
+        <div class="flex flex-wrap gap-2 items-center">
+            <template x-for="(file, index) in files">
+                <div class="relative">
+                    <input type="image" name="{{ $attributes->get('name') }}" :value="file" :src="file" class="block w-32 h-32 mb-2 object-cover rounded-lg"  alt="No image"/>
+                    <input type="hidden" name="old_{{ $attributes->get('name') }}" :value="file"/>
+                    <x-button type="button" variant="soft" color="danger" size="sm" class="absolute top-0 right-0" @click="files.splice(index, 1)">
+                        <x-lucide-x-circle class="size-3"/>
+                    </x-button>
+                </div>
+            </template>
+            <template x-for="(file, index) in previews">
+                <div class="relative">
+                    <input type="image" name="{{ $attributes->get('name') }}" :src="file" class="block w-32 h-32 mb-2 object-cover rounded-lg"  alt="No image"/>
+                    <x-button type="button" variant="soft" color="danger" size="sm" class="absolute top-0 right-0" @click="previews.splice(index, 1)">
+                        <x-lucide-x-circle class="size-3"/>
+                    </x-button>
+                </div>
+            </template>
+            <x-input-label for="{{ $id }}">
+                <span class="w-32 h-32 mb-2 object-cover rounded-lg border border-dashed border-neutral-500 grid place-items-center text-neutral-500">
+                    <span>
+                        <x-lucide-images class="size-6 text-inherit mx-auto mb-1"/>
+                        <span class="block text-xs">{{ $label }}</span>
+                    </span>
+                </span>
+            </x-input-label>
+        </div>
+    </div>
 
     <!-- File Input -->
     <div class="relative">
@@ -22,7 +45,7 @@
             type="file"
             id="{{ $id }}"
             {{$attributes->class([
-                "block w-full text-sm text-gray-500
+                "hidden w-full text-sm text-gray-500
                 file:me-4 file:py-2 file:px-4
                 file:rounded-lg file:border-0
                 file:text-sm file:font-semibold
@@ -34,12 +57,11 @@
                 dark:hover:file:bg-blue-400"
             ])}}
             x-on:change="
-                const reader = new FileReader();
-                reader.onload = (e) => preview = e.target.result;
-                if ($event.target.files.length > 0) {
-                    reader.readAsDataURL($event.target.files[0]);
-                } else {
-                    preview = null;
+                previews = [];
+                for(let i = 0; i < $event.target.files.length; i++){
+                    const reader = new FileReader();
+                    reader.onload = (e) => previews.push(e.target.result);
+                    reader.readAsDataURL($event.target.files[i])
                 }
             "
             @disabled($disabled)
@@ -61,5 +83,5 @@
     </div>
 
     <!-- Validation Error -->
-    <x-input-error :messages="$errors->get($attributes->get('name'))" />
+    <x-input-error :messages="$attributes->get('errors') ?? $errors->get($attributes->get('name'))" />
 </div>

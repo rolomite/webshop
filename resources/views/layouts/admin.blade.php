@@ -27,8 +27,31 @@
                 </div>
             @endisset
         </header>
-        <main>
-            <div class="mx-auto max-w-7xl px-1 py-6 sm:px-1 lg:px-8">
+        <main class="mx-auto max-w-7xl">
+            <div class="max-w-sm my-2 mx-auto">
+                @if (session('success'))
+                    <div class="bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert" tabindex="-1" aria-labelledby="hs-bordered-success-style-label">
+                        <div class="flex">
+                            <div class="shrink-0">
+                                <!-- Icon -->
+                                <span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-400">
+                                <x-lucide-check-circle class="size-4"/>
+                            </span>
+                                <!-- End Icon -->
+                            </div>
+                            <div class="ms-3">
+                                <h3 id="hs-bordered-success-style-label" class="text-gray-800 font-semibold dark:text-white">
+                                    Successful
+                                </h3>
+                                <p class="text-sm text-gray-700 dark:text-white">
+                                    {{session('success')}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+            <div class="px-1 py-6 sm:px-1 lg:px-8">
                 {{ $slot }}
             </div>
         </main>

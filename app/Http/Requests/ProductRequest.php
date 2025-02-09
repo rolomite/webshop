@@ -27,12 +27,12 @@ class ProductRequest extends FormRequest
             ];
         }
         return [
-            'project_name' => ['required', 'string', 'max:255'],
-            'preview_link' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
-            'repo_link' => ['required', 'string', 'max:255'],
-            'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'price' => ['required', 'numeric'],
+            'images' => ['array', 'max:4'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'old_images.*' => ['sometimes', 'url'],
             'published_at' => ['required', 'in:published,draft'],
         ];
     }

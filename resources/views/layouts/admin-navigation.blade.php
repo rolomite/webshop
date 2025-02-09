@@ -6,6 +6,11 @@
             'active' => request()->routeIs('admin.dashboard')
         ],
         [
+            'title' => 'Products',
+            'href' => route('admin.products.index'),
+            'active' => request()->routeIs('admin.products.*')
+        ],
+        [
             'title' => 'Orders',
             'href' => '#',
             'active' => false
