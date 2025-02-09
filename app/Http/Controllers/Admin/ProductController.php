@@ -33,25 +33,19 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->validated();
-        $images = [];
-
-
+        $data['images'] = [];
 
         foreach ($request->images as $key => $image) {
             if($image->isValid()) {
-                $images[] = $image->storePublicly('images', 'public');
+                $data['images'][] = $image->storePublicly('images', 'public');
             }
         }
 
+        $data['featured_image'] = $data['images'][0] ?? '';
+        $data['published_at'] = $data['published_at'] === "published" ? now() : null;
 
-        $product = Product::query()->create([
-            "name" => $data["name"],
-            "price" => $data["price"],
-            "description" => $data["description"],
-            "images" => $images ?? [],
-            "featured_image" => $images[0] ?? '',
-            "published_at" => $data['published_at'] === "published" ? now() : null,
-        ]);
+
+        $product = Product::query()->create($data);
 
         return redirect()->route('admin.products.show', $product)->with('success', 'Product added successfully');
     }
@@ -82,24 +76,20 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         $data = $request->validated();
-        $images = $request->get('old_images');
+        $data['images'] = $request->get('old_images');
 
 
-        foreach ($request->images ?? [] as $key => $image) {
+        foreach ($request->images as $key => $image) {
             if($image->isValid()) {
-                $images[] = $image->storePublicly('images', 'public');
+                $data['images'][] = $image->storePublicly('images', 'public');
             }
         }
 
+        $data['featured_image'] = $data['images'][0] ?? '';
+        $data['published_at'] = $data['published_at'] === "published" ? $product->published_at ?? now() : null;
 
-        $product->update([
-            "name" => $data["name"],
-            "price" => $data["price"],
-            "description" => $data["description"],
-            "images" => $images ?? [],
-            "featured_image" => $images[0] ?? '',
-            "published_at" => $data['published_at'] === "published" ? now() : null,
-        ]);
+
+        $product->update($data);
 
         return redirect()->back()->with('success', 'Product updated successfully');
     }

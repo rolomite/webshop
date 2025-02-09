@@ -26,6 +26,13 @@ foreach ($product->images ?? [] as $image){
                 <x-lucide-dollar-sign class="size-4" />
             </x-slot:prefix>
         </x-text-input>
+
+        <x-text-input name="stock" label="Stock" value="{{ $product?->stock }}" placeholder="5">
+            <x-slot:prefix>
+                <x-lucide-scan class="size-4" />
+            </x-slot:prefix>
+        </x-text-input>
+
         <x-select name="published_at" id="publish_now" label="Publish Now" :options="['Publish' => 'published', 'Draft' => 'draft']"  value="{{ $product?->published() ? 'published' : 'draft' }}">
             <option value="publish">Publish</option>
             <option value="draft">Draft</option>
