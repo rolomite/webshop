@@ -41,7 +41,7 @@ class CartController extends Controller
       $payment_url = $paymentService->charge(
         $request->user(),
         $totalPrice,
-         route('store')
+         route('payment')
       );
       return response()->json($payment_url, 200);
     }catch(ChargeFailedException){

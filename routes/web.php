@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ShopController::class, 'index'])->name('store');
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
 Route::resource('cart', CartController::class)->names('cart');
 Route::post('checkout', [CartController::class, 'checkout'])
     ->middleware('auth')

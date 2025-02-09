@@ -47,7 +47,7 @@
                 </div>
             </template>
         </div>
-        <div x-show="cart.length > 0">
+        <div x-show="cart.count > 0">
             <div class="flex items-center justify-between border-t pt-5 mb-5">
                 Total: <p><span class="ml-2" x-currency:NGN="total"></span></p>
             </div>

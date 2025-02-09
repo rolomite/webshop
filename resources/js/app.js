@@ -7,20 +7,12 @@ import axios from "axios";
 window.Alpine = Alpine;
 Alpine.plugin(persist);
 
-Alpine.directive("currency", (el, { value, expression }, { evaluate }) => {
-    el.textContent = Intl.NumberFormat("en-us", {
-        currency: value.toUpperCase(),
-        style: "currency",
-        currencyDisplay: "narrowSymbol",
-    }).format(evaluate(expression));
-});
-
-Alpine.data("cartHandler", () => ({
+Alpine.data("cart", () => ({
     cart: Alpine.$persist({
         total: 0,
         count: 0,
-        items: {}
-    }).as("_x_cart"), // Persist cart in localStorage
+        items: {},
+    }), // Persist cart in localStorage
     alert: false,
     message: "",
 
@@ -29,8 +21,8 @@ Alpine.data("cartHandler", () => ({
     },
 
     addToCart(product) {
-        if(this.cart.items[product.id]) 
-            return this.showAlert('Product already added')
+        if (this.cart.items[product.id])
+            return this.showAlert("Product already added");
         this.cart.items[product.id] = {
             id: product.id,
             name: product.project_name,
@@ -39,7 +31,7 @@ Alpine.data("cartHandler", () => ({
         };
 
         this.cart.count++;
-        this.cart.total -= this.cart.items[productId].price;
+        this.cart.total += this.cart.items[product.id].price;
 
         // Show the alert
         this.showAlert("product added successfully");
@@ -65,12 +57,12 @@ Alpine.data("cartHandler", () => ({
         });
 
         if (response.status === 401) {
-            window.location.href = '/login'
+            window.location.href = "/login";
         }
 
         if (response.status === 422) {
             console.log(response.data);
-       }
+        }
 
         if (response.status !== 200) {
             this.showAlert(response.data["error"]);
@@ -81,5 +73,14 @@ Alpine.data("cartHandler", () => ({
         return (window.location.href = response.data);
     },
 }));
+
+
+Alpine.directive("currency", (el, { value, expression }, { evaluate }) => {
+    el.textContent = Intl.NumberFormat("en-us", {
+        currency: value.toUpperCase(),
+        style: "currency",
+        currencyDisplay: "narrowSymbol",
+    }).format(evaluate(expression));
+});
 
 Alpine.start();
