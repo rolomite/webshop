@@ -1,9 +1,9 @@
 @php
 $navigations = [
 [
-'title' => 'Store',
-'href' => route('store'),
-'active' => request()->routeIs('store')
+    'title' => 'Store',
+    'href' => route('store'),
+    'active' => request()->routeIs('store')
 ],
 ];
 @endphp
@@ -11,9 +11,12 @@ $navigations = [
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
+                <!-- Logo -->
                 <div class="shrink-0">
                     <x-application-logo />
                 </div>
+
+                <!-- Desktop menu -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         @foreach($navigations as $navItem)
@@ -24,16 +27,20 @@ $navigations = [
                     </div>
                 </div>
             </div>
+
+            <!-- Cart -->
+            <div class="ml-auto">
+                <a href="{{route('cart')}}" class="relative block rounded-full bg-neutral-800 p-1 text-neutral-400 hover:text-white focus:outline-none focus:ring-white">
+                    <span class="absolute -inset-1.5"></span>
+                    <span class="sr-only">View cart</span>
+                    <x-lucide-shopping-cart class="size-5" />
+                    <span x-show="!!$store.cart.length" class="absolute -top-1 -right-2 text-xs font-light text-center w-5 h-5 flex items-center justify-center text-white bg-teal-800/90 rounded-full" x-text="$store.cart.length"></span>
+                </a>
+            </div>
+
+            <!-- Profile Menu -->
             <div class="hidden md:block">
                 <div class="ml-4 flex items-center md:ml-6">
-                    <a href="{{route('cart.index')}}" class="relative rounded-full bg-neutral-800 p-1 text-neutral-400 hover:text-white focus:outline-none focus:ring-white">
-                        <span class="absolute -inset-1.5"></span>
-                        <span class="sr-only">View cart</span>
-                        <x-lucide-shopping-cart class="size-6" />
-                        <span x-show="cart.count > 0" class="absolute -top-1 -right-2 text-xs font-bold text-center w-5 h-5 flex items-center justify-center text-white bg-teal-800/90 rounded-full" x-text="cart.length"></span>
-                    </a>
-
-
                     <!-- Profile dropdown -->
                     <div class="relative ml-3">
                         <div>
@@ -61,6 +68,7 @@ $navigations = [
                     </div>
                 </div>
             </div>
+
             <div class="-mr-2 flex md:hidden">
                 <!-- Mobile menu button -->
                 <button @click="isOpen = !isOpen" x-transition type="button" class="relative inline-flex items-center justify-center rounded-md bg-neutral-800 p-2 text-neutral-400 hover:bg-neutral-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-800" aria-controls="mobile-menu" aria-expanded="false">
@@ -79,7 +87,7 @@ $navigations = [
         </div>
     </div>
 
-    <!-- Mobile menu, show/hide based on menu state. -->
+    <!-- Mobile menu -->
     <div class="md:hidden" id="mobile-menu" x-show="isOpen" @click.outside="isOpen = false">
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             @foreach($navigations as $navItem)
@@ -97,11 +105,11 @@ $navigations = [
                     <div class="text-sm font-medium text-neutral-400">tom@example.com</div>
                 </div>
 
-                <a href="{{route('cart.index')}}" class="relative ml-auto shrink-0 rounded-full bg-neutral-800 p-1 text-neutral-400 hover:text-white focus:outline-none focus:ring-white">
+                <a href="{{route('cart')}}" class="relative ml-auto shrink-0 rounded-full bg-neutral-800 p-1 text-neutral-400 hover:text-white focus:outline-none focus:ring-white">
                         <span class="absolute -inset-1.5"></span>
                         <span class="sr-only">View cart</span>
                         <x-lucide-shopping-cart class="size-6" />
-                        <span x-show="cart.length > 0" class="absolute -top-1 -right-2 text-xs font-bold text-center w-5 h-5 flex items-center justify-center text-white bg-teal-800/90 rounded-full" x-text="cart.length"></span>
+                        <span x-show="!!$store.cart.length" class="absolute -top-1 -right-2 text-xs font-bold text-center w-5 h-5 flex items-center justify-center text-white bg-teal-800/90 rounded-full" x-text="$store.cart.length"></span>
                     </a>
             </div>
             <div class="mt-3 space-y-1 px-2">

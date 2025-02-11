@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+/**
+ * @method static Builder public ()
+ */
 class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
@@ -13,7 +18,14 @@ class Product extends Model
     protected $guarded = [];
     protected $casts = [
         'published_at' => 'datetime',
+        'images' => 'json',
+        'meta' => 'json',
     ];
+
+    public function scopePublic(Builder $query)
+    {
+        return $query->where('published_at', '<=', now());
+    }
 
     public function published()
     {

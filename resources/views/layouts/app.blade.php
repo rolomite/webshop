@@ -17,12 +17,12 @@
 </head>
 
 <body class="font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-200 antialiased h-full">
-    <div class="min-h-full" x-data="cart()">
+    <div class="min-h-full">
         @include('layouts.navigation')
 
         <header class="bg-white dark:bg-neutral-800 shadow">
             @isset($header)
-            <div {{$header->attributes->class("mx-auto max-w-7xl px-4 py-4 sm:px-4 lg:px-6")}}>
+            <div {{$header->attributes->class("mx-auto max-w-7xl px-2 py-4")}}>
                 {{ $header }}
             </div>
             @endisset
@@ -33,6 +33,8 @@
             </div>
         </main>
     </div>
+
+    <x-alert-container/>
 </body>
 
 </html>

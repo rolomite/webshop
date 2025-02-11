@@ -2,31 +2,60 @@
 
 namespace App\Services;
 
-use App\Exceptions\Payment\ChargeFailedException;
-use App\Models\User;
-use Illuminate\Support\Facades\Http;
+
+use App\Enums\PaymentStatus;
+use App\Exceptions\PaymentFailed;
+use App\Gateways\Contracts\GatewayContract;
+use App\Models\Contracts\Payable;
+use App\Models\Payment;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PaymentService
 {
-    public function charge(User $user, float $amount, $callback_url = null){
-        $url = "https://api.paystack.co/transaction/initialize";
-        $apiKey = env('PAY_KEY');
-        $fields = [
-          'email' => $user->email,
-          'amount' => $amount * 100,
-          'callback_url' => $callback_url,
-        ];
-    
-        $response = Http::withHeaders([
-          "Authorization" => "Bearer $apiKey"
-        ])->post($url, $fields);
-        
-        if(!$response->successful()) {
-            throw new ChargeFailedException;
-        }
+    public function __construct(private readonly GatewayContract $gateway){}
 
-        $data = $response->json();
-        return response()->json($data['data']['authorization_url']);
+    /**
+     * @throws PaymentFailed
+     */
+    public function createPayment(Payable $payable): Payment
+    {
+        $user = Auth::user();
+        $payment = $payable->payment()->make([
+            'reference' => 'ORD-' . time() . Str::random(8),
+            'amount' => $payable->getTotal(),
+            'user_id' => $user->id,
+            'gateway' => $this->gateway->getName(),
+            'status' => PaymentStatus::PENDING
+        ]);
+
+        $data = $this->gateway->charge($user, $payment->amount, $payment->reference);
+
+        $payment->fill(['meta' => [
+            'authorization_url' => $data['authorization_url'],
+            'reference' => $data['reference'],
+        ]])->save();
+
+        return $payment;
     }
-    public function verify(){}
+
+    /**
+     * @throws PaymentFailed
+     */
+    public function createPaymentLink(Payable $payable): string
+    {
+        $payment = $this->createPayment($payable);
+        return $this->gateway->getLinkFromPayment($payment);
+    }
+
+    public function verify(Payment $payment): void
+    {
+        if($payment->status === 'paid') throw new PaymentFailed('Payment already used');
+        if(!$this->gateway->verify($payment->reference)){
+            throw new PaymentFailed('This payment not verified');
+        };
+        $payment->update([
+            'status' => PaymentStatus::PAID,
+        ]);
+    }
 }
