@@ -1,47 +1,50 @@
 @php
-    $navigations = [
-        [
-            'title' => 'Dashboard',
-            'href' => route('admin.dashboard'),
-            'active' => request()->routeIs('admin.dashboard')
-        ],
-        [
-            'title' => 'Products',
-            'href' => route('admin.products.index'),
-            'active' => request()->routeIs('admin.products.*')
-        ],
-        [
-            'title' => 'Orders',
-            'href' => '#',
-            'active' => false
-        ],
-        [
-            'title' => 'Customers',
-            'href' => '#',
-            'active' => false
-        ],
-        [
-            'title' => 'Settings',
-            'href' => route('admin.settings.index'),
-            'active' => request()->routeIs('admin.settings.index')
-        ],
-    ];
+$navigations = [
+[
+'title' => 'Dashboard',
+'href' => route('admin.dashboard'),
+'active' => request()->routeIs('admin.dashboard')
+],
+[
+'title' => 'Products',
+'href' => route('admin.products.index'),
+'active' => request()->routeIs('admin.products.*')
+],
+[
+'title' => 'Orders',
+'href' => '#',
+'active' => false
+],
+[
+'title' => 'Customers',
+'href' => '#',
+'active' => false
+],
+[
+'title' => 'Settings',
+'href' => '#',
+'active' => request()->routeIs('admin.settings.index')
+],
+[
+'title' => 'Category',
+'href' => route('admin.categories.index'),
+'active' => request()->routeIs('admin.categories.index')
+],
+];
 @endphp
 <nav class="bg-neutral-800" x-data="{isOpen: false}">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <x-application-logo/>
+                    <x-application-logo />
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         @foreach($navigations as $navItem)
-                            <a href="{{ $navItem['href'] }}" @if($navItem['active']) aria-current="page" @endif @class([
-                                        "rounded-md px-3 py-2 text-sm font-medium",
-                                        "bg-neutral-900 text-white" => $navItem['active'],
-                                        "text-neutral-300 hover:bg-neutral-700 hover:text-white" => !$navItem['active'],
-                                ])>{{ $navItem['title'] }}</a>
+                        <a href="{{ $navItem['href'] }}" @if($navItem['active']) aria-current="page" @endif @class([ "rounded-md px-3 py-2 text-sm font-medium" , "bg-neutral-900 text-white"=> $navItem['active'],
+                            "text-neutral-300 hover:bg-neutral-700 hover:text-white" => !$navItem['active'],
+                            ])>{{ $navItem['title'] }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -69,9 +72,7 @@
                             x-transition:leave-end="transform opacity-0 scale-95"
                             @click.outside="isOpen = false"
                             class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                            <a href="{{route('admin.profile.edit')}}"  role="menuitem" tabindex="-1" id="user-menu-item-0" @class([
-                                    "block px-4 py-2 text-sm text-neutral-700",
-                                    "bg-neutral-100 outline-none" => request()->routeIs('admin.profile.edit')
+                            <a href="{{route('admin.profile.edit')}}" role="menuitem" tabindex="-1" id="user-menu-item-0" @class([ "block px-4 py-2 text-sm text-neutral-700" , "bg-neutral-100 outline-none"=> request()->routeIs('admin.profile.edit')
                                 ])>Your Profile</a>
                             <button form="logout-form" class="block px-4 py-2 text-sm text-neutral-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
                             <form id="logout-form" action="{{ route('logout') }}" method="post">@csrf</form>
@@ -101,10 +102,8 @@
     <div class="md:hidden" id="mobile-menu" x-show="isOpen" @click.outside="isOpen = false">
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             @foreach($navigations as $navItem)
-                <a href="{{ $navItem['href'] }}" @class([
-                            "block rounded-md px-3 py-2 text-base font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white",
-                            "bg-neutral-900 text-white" => $navItem['active']
-                        ]) @if($navItem['active']) aria-current="page" @endif>{{ $navItem['title'] }}</a>
+            <a href="{{ $navItem['href'] }}" @class([ "block rounded-md px-3 py-2 text-base font-medium text-neutral-300 hover:bg-neutral-700 hover:text-white" , "bg-neutral-900 text-white"=> $navItem['active']
+                ]) @if($navItem['active']) aria-current="page" @endif>{{ $navItem['title'] }}</a>
             @endforeach
         </div>
         <div class="border-t border-neutral-700 pb-3 pt-4">

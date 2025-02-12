@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
@@ -22,6 +23,7 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
     Route::redirect('/', 'admin/dashboard')->name('admin');
 
     Route::get('/dashboard', [ProductController::class, 'index'])->name('dashboard');
+    Route::resource('categories', CategoryController::class);
 
     Route::resource('products', ProductController::class);
 

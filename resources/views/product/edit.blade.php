@@ -12,6 +12,6 @@
     </x-slot:header>
 
     <section>
-        <x-forms.product-form :product="$product"/>
+        <x-forms.product-form :product="$product" />
     </section>
 </x-admin-layout>

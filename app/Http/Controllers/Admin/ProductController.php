@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Models\Category;
 use App\Models\fc;
 use App\Models\Product;
 
@@ -24,7 +25,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        return view('product.create', [
+            'categories' => Category::query()->latest()->pluck('id', 'name'),
+        ]);
     }
 
     /**
@@ -32,11 +35,12 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        dd($request->all());
         $data = $request->validated();
         $data['images'] = [];
 
         foreach ($request->images as $key => $image) {
-            if($image->isValid()) {
+            if ($image->isValid()) {
                 $data['images'][] = $image->storePublicly('images', 'public');
             }
         }
@@ -80,7 +84,7 @@ class ProductController extends Controller
 
 
         foreach ($request->images as $key => $image) {
-            if($image->isValid()) {
+            if ($image->isValid()) {
                 $data['images'][] = $image->storePublicly('images', 'public');
             }
         }

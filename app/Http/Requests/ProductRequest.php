@@ -34,6 +34,8 @@ class ProductRequest extends FormRequest
             'images' => ['array', 'max:4'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'old_images.*' => ['sometimes', 'url'],
+            'category[]' => ['required', 'array'],
+            'category.*' => ['required', 'exists:categories.id'],
             'published_at' => ['required', 'in:published,draft'],
         ];
     }

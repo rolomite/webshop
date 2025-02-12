@@ -4,6 +4,6 @@
     </x-slot:header>
 
     <section>
-        <x-forms.product-form />
+        <x-forms.product-form :categories="$categories" />
     </section>
 </x-admin-layout>
